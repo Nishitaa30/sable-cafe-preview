@@ -158,18 +158,16 @@
     opacity: 0;
     animation: heroCycle 24s infinite;
   }
-  /* 5 slides, each visible ~5s, with a slow ken-burns zoom while shown */
-  .hero-slide { animation-duration: 30s; }
+  /* 3 slides, each visible ~8s, with a slow ken-burns zoom while shown */
+  .hero-slide { animation-duration: 24s; }
   .hero-slide:nth-child(1) { animation-delay: 0s; }
-  .hero-slide:nth-child(2) { animation-delay: 6s; }
-  .hero-slide:nth-child(3) { animation-delay: 12s; }
-  .hero-slide:nth-child(4) { animation-delay: 18s; }
-  .hero-slide:nth-child(5) { animation-delay: 24s; }
+  .hero-slide:nth-child(2) { animation-delay: 8s; }
+  .hero-slide:nth-child(3) { animation-delay: 16s; }
   @keyframes heroCycle {
     0%   { opacity: 0; transform: scale(1.12); }
-    3%   { opacity: 1; }
-    18%  { opacity: 1; transform: scale(1); }
-    22%  { opacity: 0; }
+    4%   { opacity: 1; }
+    33%  { opacity: 1; transform: scale(1); }
+    38%  { opacity: 0; }
     100% { opacity: 0; }
   }
 
@@ -385,11 +383,9 @@
        To add more real photos: drop them in /images and add another .hero-slide below,
        then change the "3 slides" timing note in CSS if you add a 4th. -->
   <div class="hero-slides">
-    <div class="hero-slide" style="background-image:url('images/hero-5.jpeg')"></div>
     <div class="hero-slide" style="background-image:url('images/hero-2.webp')"></div>
-    <div class="hero-slide" style="background-image:url('images/hero-4.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/hero-3.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/hero-1.jpeg')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2000&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop')"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="wrap">

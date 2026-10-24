@@ -83,15 +83,21 @@
     padding: 0.9rem 2.4rem;
   }
   .brand {
-    font-family: var(--serif);
-    font-size: 1.7rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--sans);
+    font-size: 1.5rem;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.26em;
     color: var(--white);
     transition: color 0.5s var(--ease);
   }
+  .brand .cookie { width: 30px; height: 30px; flex-shrink: 0; }
+  .brand .cookie .dough { fill: var(--terracotta); }
+  .brand .cookie .line { stroke: rgba(255,255,255,0.85); transition: stroke 0.5s var(--ease); }
+  .brand .cookie .crumb { fill: var(--terracotta); }
   header.nav.scrolled .brand { color: var(--charcoal); }
-  .brand span { color: var(--terracotta); }
+  header.nav.scrolled .brand .cookie .line { stroke: var(--cream); }
+  .brand small { font-size: 0.6rem; letter-spacing: 0.3em; opacity: 0.8; margin-left: -0.3em; align-self: flex-end; padding-bottom: 3px; }
 
   .nav-links { display: flex; gap: 2.2rem; align-items: center; }
   .nav-links a {
@@ -347,7 +353,19 @@
 
 <!-- NAV -->
 <header class="nav" id="nav">
-  <a href="#home" class="brand">SA<span>B</span>LE</a>
+  <a href="#home" class="brand">
+    <svg class="cookie" viewBox="0 0 48 48" aria-hidden="true">
+      <path class="dough" d="M24 5c-9.2 0-17 7-17 16.5C7 32 14.5 43 24 43s17-10.5 17-21c0-2.4-.5-4.6-1.4-6.5-1.6.9-3.6 1-5.2.1-1.8-1-2.8-3-2.6-5C30 7.2 27.1 5 24 5Z"/>
+      <circle class="crumb" cx="37.5" cy="9.5" r="1.6"/>
+      <circle class="crumb" cx="40.5" cy="14" r="1.1"/>
+      <circle class="crumb" cx="35" cy="14.5" r="0.9"/>
+      <g class="line" fill="none" stroke-width="1.6" stroke-linecap="round">
+        <path d="M16 20 L30 20"/><path d="M15 26 L31 26"/><path d="M16 32 L29 32"/>
+        <path d="M20 15 L20 37"/><path d="M26 16 L26 37"/>
+      </g>
+    </svg>
+    <span>SABLE<small>CAFE</small></span>
+  </a>
   <nav class="nav-links" id="navLinks">
     <a href="#story">Our Story</a>
     <a href="#menu">Menu</a>
@@ -549,8 +567,17 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href="#home" class="brand">SA<span style="color:var(--terracotta)">B</span>LE</a>
-        <p>A little corner of Italy — wood-fired, slow-brewed, and made with care. Buon appetito.</p>
+        <a href="#home" class="brand" style="color:var(--white)">
+          <svg class="cookie" viewBox="0 0 48 48" aria-hidden="true" style="width:34px;height:34px">
+            <path class="dough" d="M24 5c-9.2 0-17 7-17 16.5C7 32 14.5 43 24 43s17-10.5 17-21c0-2.4-.5-4.6-1.4-6.5-1.6.9-3.6 1-5.2.1-1.8-1-2.8-3-2.6-5C30 7.2 27.1 5 24 5Z"/>
+            <circle class="crumb" cx="37.5" cy="9.5" r="1.6"/><circle class="crumb" cx="40.5" cy="14" r="1.1"/><circle class="crumb" cx="35" cy="14.5" r="0.9"/>
+            <g class="line" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round">
+              <path d="M16 20 L30 20"/><path d="M15 26 L31 26"/><path d="M16 32 L29 32"/><path d="M20 15 L20 37"/><path d="M26 16 L26 37"/>
+            </g>
+          </svg>
+          <span>SABLE<small>CAFE</small></span>
+        </a>
+        <p>Serving the best sourdough pizza in Bangalore — slow-fermented, wood-fired, and made with care.</p>
       </div>
       <div class="foot-col">
         <h5>Explore</h5>

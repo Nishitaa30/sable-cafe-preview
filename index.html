@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sable — Italian Cucina & Caffè</title>
+<meta name="description" content="Sable — a luxury Italian dining experience. Wood-fired pizzas, fresh pasta, and artisanal coffee. Reserve your table today." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #faf6f0;
+    --cream-2: #f3ebe0;
+    --charcoal: #1f1b18;
+    --ink: #2b2521;
+    --terracotta: #b4552d;
+    --terracotta-dark: #96441f;
+    --gold: #a98348;
+    --muted: #8a7f73;
+    --line: #e4d8c8;
+    --white: #ffffff;
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Jost", system-ui, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* subtle grain overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, .serif { font-family: var(--serif); font-weight: 500; }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--terracotta);
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 2.4rem;
+    transition: all 0.5s var(--ease);
+  }
+  header.nav.scrolled {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 2.4rem;
+  }
+  .brand {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--white);
+    transition: color 0.5s var(--ease);
+  }
+  header.nav.scrolled .brand { color: var(--charcoal); }
+  .brand span { color: var(--terracotta); }
+
+  .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    transition: color 0.3s var(--ease);
+    position: relative;
+  }
+  header.nav.scrolled .nav-links a { color: var(--ink); }
+  .nav-links a:not(.btn)::after {
+    content: ""; position: absolute; left: 0; bottom: -4px;
+    width: 0; height: 1px; background: var(--terracotta);
+    transition: width 0.3s var(--ease);
+  }
+  .nav-links a:not(.btn):hover::after { width: 100%; }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.6rem;
+    background: var(--terracotta);
+    color: var(--white) !important;
+    border: 1px solid var(--terracotta);
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.35s var(--ease);
+  }
+  .btn:hover { background: var(--terracotta-dark); border-color: var(--terracotta-dark); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--charcoal) !important; border-color: var(--charcoal); }
+  .btn-ghost:hover { background: var(--charcoal); color: var(--white) !important; }
+
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .nav-toggle span { width: 26px; height: 2px; background: var(--white); transition: 0.3s; }
+  header.nav.scrolled .nav-toggle span { background: var(--charcoal); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to right, rgba(20,16,14,0.78) 0%, rgba(20,16,14,0.45) 50%, rgba(20,16,14,0.25) 100%),
+      url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2000&auto=format&fit=crop") center/cover no-repeat;
+    transform: scale(1.1);
+    animation: kenburns 18s ease-out forwards;
+  }
+  @keyframes kenburns { to { transform: scale(1); } }
+
+  .hero-content { position: relative; z-index: 2; max-width: 680px; color: var(--white); }
+  .hero .eyebrow { color: var(--gold); display: inline-block; margin-bottom: 1.6rem; }
+  .hero h1 {
+    font-size: clamp(3.2rem, 8vw, 6.2rem);
+    line-height: 0.98;
+    font-weight: 500;
+    margin-bottom: 1.6rem;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p {
+    font-size: 1.12rem;
+    font-weight: 300;
+    max-width: 480px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 2.4rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-actions .btn-ghost { color: var(--white) !important; border-color: rgba(255,255,255,0.6); }
+  .hero-actions .btn-ghost:hover { background: var(--white); color: var(--charcoal) !important; }
+
+  .scroll-cue {
+    position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: rgba(255,255,255,0.7); font-size: 0.68rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+  }
+  .scroll-cue span { width: 1px; height: 40px; background: rgba(255,255,255,0.5); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.3; transform:scaleY(0.6);} 50%{opacity:1; transform:scaleY(1);} }
+
+  /* ---------- REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 0.12s; }
+  .reveal.d2 { transition-delay: 0.24s; }
+  .reveal.d3 { transition-delay: 0.36s; }
+
+  /* ---------- STORY ---------- */
+  .story { padding: 7rem 0; background: var(--cream); }
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .story-img { position: relative; }
+  .story-img img { width: 100%; height: 540px; object-fit: cover; border-radius: 2px; display: block; }
+  .story-img .badge {
+    position: absolute; bottom: -28px; right: -28px;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: var(--terracotta); color: var(--white);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-family: var(--serif); line-height: 1.1;
+    box-shadow: 0 20px 50px rgba(180,85,45,0.35);
+  }
+  .story-img .badge b { font-size: 2.6rem; font-weight: 600; }
+  .story-img .badge small { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; font-family: var(--sans); margin-top: 4px; }
+  .section-title { font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.05; color: var(--charcoal); margin: 1rem 0 1.6rem; }
+  .section-title em { font-style: italic; color: var(--terracotta); }
+  .story-text p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1.02rem; }
+  .story-sign { font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: var(--charcoal); margin-top: 1.4rem; }
+
+  /* ---------- MENU ---------- */
+  .menu { padding: 7rem 0; background: var(--white); }
+  .menu-head { text-align: center; max-width: 620px; margin: 0 auto 3.4rem; }
+  .menu-head p { color: var(--muted); margin-top: 0.8rem; }
+
+  .menu-tabs { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 3.2rem; flex-wrap: wrap; }
+  .menu-tab {
+    padding: 0.6rem 1.5rem; font-size: 0.78rem; letter-spacing: 0.16em;
+    text-transform: uppercase; font-weight: 500; cursor: pointer;
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    transition: all 0.3s var(--ease); font-family: var(--sans);
+  }
+  .menu-tab.active { background: var(--charcoal); color: var(--white); border-color: var(--charcoal); }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; animation: fade 0.5s var(--ease); }
+  @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+
+  .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem 4rem; }
+  .menu-item { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-bottom: 1px dotted var(--line); padding-bottom: 1.2rem; }
+  .menu-item h4 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--charcoal); }
+  .menu-item .desc { font-size: 0.86rem; color: var(--muted); margin-top: 0.2rem; }
+  .menu-item .price { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--terracotta); white-space: nowrap; }
+  .veg { display: inline-block; width: 9px; height: 9px; border: 1.5px solid #2e7d32; margin-right: 6px; position: relative; top: -2px; }
+  .veg i { position: absolute; inset: 1.5px; background: #2e7d32; border-radius: 50%; }
+  .nonveg i { background: #b4552d; }
+  .nonveg { border-color: #b4552d; }
+
+  /* ---------- FEATURES strip ---------- */
+  .feat { background: var(--charcoal); color: var(--cream); padding: 5rem 0; }
+  .feat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4rem; text-align: center; }
+  .feat-grid .item h3 { font-size: 2.8rem; color: var(--gold); margin-bottom: 0.3rem; }
+  .feat-grid .item p { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,246,240,0.6); }
+
+  /* ---------- GALLERY ---------- */
+  .gallery { padding: 7rem 0 5rem; background: var(--cream); }
+  .gal-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 1rem; margin-top: 3rem; }
+  .gal-grid img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.95); transition: transform 0.7s var(--ease), filter 0.5s; }
+  .gal-grid a { overflow: hidden; border-radius: 2px; }
+  .gal-grid a:hover img { transform: scale(1.08); filter: saturate(1.15); }
+  .gal-grid .tall { grid-row: span 2; }
+  .gal-grid .wide { grid-column: span 2; }
+
+  /* ---------- RESERVE ---------- */
+  .reserve { padding: 7rem 0; background: var(--white); }
+  .reserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .reserve-info .section-title { margin-top: 0.6rem; }
+  .info-row { display: flex; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid var(--line); }
+  .info-row .ico { color: var(--terracotta); font-size: 1.2rem; width: 28px; flex-shrink: 0; }
+  .info-row b { display: block; font-family: var(--serif); font-size: 1.15rem; color: var(--charcoal); font-weight: 600; }
+  .info-row span { font-size: 0.92rem; color: var(--muted); }
+
+  form { background: var(--cream); padding: 2.6rem; border-radius: 2px; border: 1px solid var(--line); }
+  form h3 { font-size: 1.8rem; color: var(--charcoal); margin-bottom: 1.6rem; }
+  .field { margin-bottom: 1.1rem; }
+  .field label { display: block; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; font-weight: 500; }
+  .field input, .field select {
+    width: 100%; padding: 0.8rem 0.9rem; border: 1px solid var(--line);
+    background: var(--white); font-family: var(--sans); font-size: 0.95rem; color: var(--ink);
+    transition: border 0.3s; border-radius: 2px;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--terracotta); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  form .btn { width: 100%; margin-top: 0.6rem; border: none; }
+  .form-note { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 1rem; }
+  .form-success { display: none; text-align: center; padding: 1rem; color: #2e7d32; font-family: var(--serif); font-size: 1.3rem; }
+
+  /* ---------- MAP / LOCATION ---------- */
+  .map-wrap { padding: 0 0 7rem; background: var(--white); }
+  .map-wrap iframe { width: 100%; height: 420px; border: 0; filter: grayscale(0.3) contrast(1.05); display: block; }
+
+  /* ---------- FOOTER ---------- */
+  footer.site {
+    background: var(--charcoal); color: var(--cream-2);
+    padding: 4.5rem 0 1.8rem;
+  }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 3rem; }
+  .foot-brand .brand { color: var(--white); font-size: 2rem; }
+  .foot-brand p { color: rgba(250,246,240,0.55); margin-top: 1rem; font-size: 0.92rem; max-width: 280px; }
+  .foot-col h5 { font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .foot-col a, .foot-col p { display: block; color: rgba(250,246,240,0.6); font-size: 0.9rem; margin-bottom: 0.6rem; transition: color 0.3s; }
+  .foot-col a:hover { color: var(--white); }
+  .socials { display: flex; gap: 0.8rem; }
+  .socials a { width: 38px; height: 38px; border: 1px solid rgba(250,246,240,0.2); display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0; }
+  .socials a:hover { background: var(--terracotta); border-color: var(--terracotta); }
+  .foot-bottom {
+    margin-top: 3.5rem; padding-top: 1.8rem; border-top: 1px solid rgba(250,246,240,0.12);
+    text-align: center; font-size: 0.82rem; color: rgba(250,246,240,0.45);
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 880px) {
+    .nav-links {
+      position: fixed; inset: 0 0 0 auto; width: 76%; max-width: 340px;
+      background: var(--cream); flex-direction: column; justify-content: center;
+      gap: 2rem; transform: translateX(100%); transition: transform 0.45s var(--ease);
+      box-shadow: -20px 0 60px rgba(0,0,0,0.15); padding: 2rem;
+    }
+    .nav-links.open { transform: none; }
+    .nav-links a { color: var(--ink) !important; font-size: 1rem; }
+    .nav-toggle { display: flex; z-index: 1001; }
+    header.nav .nav-toggle span { background: var(--white); }
+    header.nav.scrolled .nav-toggle span { background: var(--charcoal); }
+    .story-grid, .reserve-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .story-img .badge { right: 1.4rem; bottom: -24px; }
+    .menu-list { grid-template-columns: 1fr; gap: 1.4rem; }
+    .feat-grid { grid-template-columns: 1fr 1fr; gap: 2.4rem 1rem; }
+    .gal-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+    .gal-grid .wide { grid-column: span 2; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 2.4rem; }
+    .wrap { padding: 0 1.4rem; }
+    .story { padding: 4.5rem 0; }
+    .hero-content { padding-top: 4rem; }
+  }
+  @media (max-width: 500px) {
+    .field-row { grid-template-columns: 1fr; }
+    .feat-grid, .foot-grid { grid-template-columns: 1fr; }
+    .gal-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+    .gal-grid .wide, .gal-grid .tall { grid-column: auto; grid-row: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#home" class="brand">SA<span>B</span>LE</a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#story">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reserve">Visit Us</a>
+    <a href="#reserve" class="btn">Reserve a Table</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <span class="eyebrow">Sourdough Pizza · Caffè · Bengaluru</span>
+      <h1>The best <em>sourdough</em> pizza in Bangalore.</h1>
+      <p>Naturally leavened dough, rested for days. Wood-fired, blistered, and topped with care — paired with slow-brewed coffee. Welcome to Sable.</p>
+      <div class="hero-actions">
+        <a href="#reserve" class="btn">Reserve a Table</a>
+        <a href="#menu" class="btn btn-ghost">View the Menu</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll<span></span></div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-img reveal">
+        <img src="https://images.unsplash.com/photo-1498579150354-977475b7ea0b?q=80&w=1400&auto=format&fit=crop" alt="Chef preparing fresh pasta" />
+        <div class="badge"><b>est.</b><small>Milano roots</small></div>
+      </div>
+      <div class="story-text reveal d1">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="section-title">Simple food, made with <em>real care</em>.</h2>
+        <p>Sable began with a simple belief — that good food does not need to be complicated. It needs good hands, good ingredients, and a little patience.</p>
+        <p>Our sourdough starter is fed every day. The dough rests and slow-ferments for days — that is what gives our pizza its light, airy crust and deep flavour. Nothing is rushed, because the best things never are.</p>
+        <p>Tucked away on 80 Feet Road in Indiranagar, Sable is where friends, family, and good conversation come together over a warm, wood-fired plate.</p>
+        <div class="story-sign">— The Sable Family</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <span class="eyebrow">What We Serve</span>
+      <h2 class="section-title">The Menu</h2>
+      <p>Fresh, seasonal, and made in-house. <span style="white-space:nowrap"><span class="veg"><i></i></span>Veg</span> &nbsp; <span style="white-space:nowrap"><span class="veg nonveg"><i></i></span>Non-veg</span></p>
+    </div>
+
+    <div class="menu-tabs reveal d1">
+      <button class="menu-tab active" data-tab="breakfast">Breakfast</button>
+      <button class="menu-tab" data-tab="lunch">Lunch & Pizza</button>
+      <button class="menu-tab" data-tab="dinner">Dinner</button>
+      <button class="menu-tab" data-tab="coffee">Coffee & Dolci</button>
+    </div>
+
+    <!-- Breakfast -->
+    <div class="menu-panel active" id="breakfast">
+      <div class="menu-list">
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Uova in Purgatorio</h4><div class="desc">Eggs baked in spiced tomato sugo, grilled sourdough</div></div><div class="price">₹320</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Ricotta Hotcakes</h4><div class="desc">Fluffy ricotta cakes, honey, seasonal fruit</div></div><div class="price">₹340</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Prosciutto Toast</h4><div class="desc">Sourdough, prosciutto, soft egg, parmesan</div></div><div class="price">₹380</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Avocado Bruschetta</h4><div class="desc">Smashed avocado, cherry tomato, chilli, basil</div></div><div class="price">₹310</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Cornetto & Jam</h4><div class="desc">Warm Italian croissant, house apricot preserve</div></div><div class="price">₹180</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Breakfast Panino</h4><div class="desc">Sausage, egg, provolone, roasted pepper</div></div><div class="price">₹360</div></div>
+      </div>
+    </div>
+
+    <!-- Lunch -->
+    <div class="menu-panel" id="lunch">
+      <div class="menu-list">
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Margherita</h4><div class="desc">San Marzano tomato, fior di latte, basil</div></div><div class="price">₹440</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Diavola</h4><div class="desc">Spicy salami, mozzarella, chilli oil</div></div><div class="price">₹520</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Tartufo Bianco</h4><div class="desc">Truffle cream, mushroom, mozzarella, rocket</div></div><div class="price">₹640</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Caprese Salad</h4><div class="desc">Buffalo mozzarella, heirloom tomato, basil oil</div></div><div class="price">₹390</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Pollo Panino</h4><div class="desc">Grilled chicken, pesto, provolone, focaccia</div></div><div class="price">₹410</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Minestrone</h4><div class="desc">Slow-cooked seasonal vegetable soup, parmesan</div></div><div class="price">₹290</div></div>
+      </div>
+    </div>
+
+    <!-- Dinner -->
+    <div class="menu-panel" id="dinner">
+      <div class="menu-list">
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Tagliatelle al Pomodoro</h4><div class="desc">Fresh pasta, slow sugo, basil, parmigiano</div></div><div class="price">₹480</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Spaghetti Vongole</h4><div class="desc">Clams, white wine, garlic, chilli, parsley</div></div><div class="price">₹680</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Risotto ai Funghi</h4><div class="desc">Wild mushroom, white wine, aged parmesan</div></div><div class="price">₹560</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Bistecca</h4><div class="desc">Grilled steak, rosemary, roasted potatoes</div></div><div class="price">₹920</div></div>
+        <div class="menu-item"><div><h4><span class="veg nonveg"><i></i></span>Branzino</h4><div class="desc">Whole sea bass, lemon, herbs, olive oil</div></div><div class="price">₹840</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Melanzane Parmigiana</h4><div class="desc">Baked aubergine, tomato, basil, mozzarella</div></div><div class="price">₹460</div></div>
+      </div>
+    </div>
+
+    <!-- Coffee -->
+    <div class="menu-panel" id="coffee">
+      <div class="menu-list">
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Espresso</h4><div class="desc">Single-origin, small-batch roast</div></div><div class="price">₹120</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Cappuccino</h4><div class="desc">Double shot, velvet steamed milk</div></div><div class="price">₹180</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Affogato</h4><div class="desc">Vanilla gelato drowned in hot espresso</div></div><div class="price">₹240</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Tiramisù</h4><div class="desc">Classic mascarpone, coffee-soaked savoiardi</div></div><div class="price">₹320</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Panna Cotta</h4><div class="desc">Vanilla bean, berry compote</div></div><div class="price">₹280</div></div>
+        <div class="menu-item"><div><h4><span class="veg"><i></i></span>Gelato (3 scoops)</h4><div class="desc">Ask for today's house-made flavours</div></div><div class="price">₹260</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="feat">
+  <div class="wrap">
+    <div class="feat-grid">
+      <div class="item reveal"><h3>24h</h3><p>Dough rested</p></div>
+      <div class="item reveal d1"><h3>100%</h3><p>Fresh pasta daily</p></div>
+      <div class="item reveal d2"><h3>Wood</h3><p>Fired oven</p></div>
+      <div class="item reveal d3"><h3>Milano</h3><p>Recipes & roots</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <span class="eyebrow">A Taste of Sable</span>
+      <h2 class="section-title">The Gallery</h2>
+    </div>
+    <div class="gal-grid">
+      <a class="tall reveal"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000&auto=format&fit=crop" alt="Wood-fired pizza" /></a>
+      <a class="wide reveal d1"><img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?q=80&w=1200&auto=format&fit=crop" alt="Fresh pasta" /></a>
+      <a class="reveal d2"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1000&auto=format&fit=crop" alt="Coffee" /></a>
+      <a class="reveal"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1000&auto=format&fit=crop" alt="Restaurant interior" /></a>
+      <a class="wide reveal d1"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop" alt="Dining table" /></a>
+      <a class="tall reveal d2"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1000&auto=format&fit=crop" alt="Seafood dish" /></a>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="reserve-grid">
+      <div class="reserve-info reveal">
+        <span class="eyebrow">Visit Us</span>
+        <h2 class="section-title">Come sit at <em>our table</em>.</h2>
+        <div class="info-row"><div class="ico">◷</div><div><b>Opening Hours</b><span>Mon – Fri · 8:00 AM – 11:00 PM<br />Sat – Sun · 9:00 AM – 12:00 AM</span></div></div>
+        <div class="info-row"><div class="ico">⌖</div><div><b>Find Us</b><span>80 Feet Road, next to Sapna Book House,<br />HAL 3rd Stage, Indiranagar, Bengaluru 560038</span></div></div>
+        <div class="info-row"><div class="ico">☎</div><div><b>Call to Book</b><span>+91 98xxx xxxxx</span></div></div>
+        <div class="info-row"><div class="ico">⬡</div><div><b>Instagram</b><span><a href="https://www.instagram.com/sablecafeblr/" target="_blank" style="color:var(--terracotta)">@sablecafeblr</a></span></div></div>
+      </div>
+
+      <form id="resForm">
+        <h3 class="serif">Reserve a Table</h3>
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required placeholder="Your name" />
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" required placeholder="+91" /></div>
+          <div class="field"><label for="guests">Guests</label>
+            <select id="guests"><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5 Guests</option><option>6+ Guests</option></select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="date">Date</label><input type="date" id="date" required /></div>
+          <div class="field"><label for="time">Time</label>
+            <select id="time"><option>Breakfast · 8–11 AM</option><option>Lunch · 12–3 PM</option><option>Evening · 4–7 PM</option><option>Dinner · 7–11 PM</option></select>
+          </div>
+        </div>
+        <button type="submit" class="btn">Confirm Reservation</button>
+        <p class="form-note">We will call you to confirm within 15 minutes.</p>
+        <div class="form-success" id="success">✓ Thank you! Your table request is in — we'll call you shortly.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-wrap">
+  <div class="wrap">
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=77.635%2C12.965%2C77.650%2C12.980&layer=mapnik&marker=12.9726%2C77.6412" loading="lazy" title="Sable location map — Indiranagar, Bengaluru"></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#home" class="brand">SA<span style="color:var(--terracotta)">B</span>LE</a>
+        <p>A little corner of Italy — wood-fired, slow-brewed, and made with care. Buon appetito.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <a href="#story">Our Story</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reserve">Reserve</a>
+      </div>
+      <div class="foot-col">
+        <h5>Visit</h5>
+        <p>80 Feet Road, Indiranagar<br />HAL 3rd Stage, Bengaluru 560038</p>
+        <p>+91 98xxx xxxxx</p>
+        <p>@sablecafeblr</p>
+      </div>
+      <div class="foot-col">
+        <h5>Follow</h5>
+        <div class="socials">
+          <a href="https://www.instagram.com/sablecafeblr/" target="_blank" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="Zomato">Z</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      Preview concept for The Sable Cafe. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Menu tabs
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Form
+  document.getElementById('resForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.querySelectorAll('.field, .btn, .form-note').forEach(el => el.style.display = 'none');
+    document.getElementById('success').style.display = 'block';
+  });
+
+  // Min date = today
+  document.getElementById('date').min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
